@@ -4,7 +4,7 @@ echo "-----> Making java available"
 export PATH=$PATH:/home/vcap/app/.java/bin
 
 echo "-----> Setting sonar.properties"
-echo "       sonar.web.port=${PORT}"
+echo "       sonar.web.port=${SONARQUBE_PORT}"
 echo "\n ------- The following properties were automatically created by the buildpack -----\n" >> ./sonar.properties
 echo "sonar.web.port=${SONARQUBE_PORT}\n" >> ./sonar.properties
 
