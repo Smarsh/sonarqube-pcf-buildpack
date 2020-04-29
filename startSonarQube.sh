@@ -4,6 +4,12 @@ echo "-----> Making java available"
 export PATH=$PATH:/home/vcap/app/.java/bin
 
 echo "-----> Setting sonar.properties"
+export SONARQUBE_JDBC_USERNAME=`node getCreds.js username`
+export SONARQUBE_JDBC_PASSWORD=`node getCreds.js password`
+export SONARQUBE_JDBC_URL=`node getCreds.js jdbcUrl`
+# mySQL doesn't like the url unless it hass the appended parameters
+export SONARQUBE_JDBC_URL="$SONARQUBE_JDBC_URL&useUnicode=true&characterEncoding=utf8"
+
 echo "       sonar.web.port=${SONARQUBE_PORT}"
 echo "\n ------- The following properties were automatically created by the buildpack -----\n" >> ./sonar.properties
 echo "sonar.web.port=${SONARQUBE_PORT}\n" >> ./sonar.properties
