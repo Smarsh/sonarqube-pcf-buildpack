@@ -4,14 +4,11 @@ echo "-----> Making java available"
 export PATH=$PATH:/home/vcap/app/.java/bin
 
 echo "-----> Setting sonar.properties"
-# export SONARQUBE_JDBC_USERNAME=`node getCreds.js username`
-# export SONARQUBE_JDBC_PASSWORD=`node getCreds.js password`
-# export SONARQUBE_JDBC_URL=`node getCreds.js jdbcUrl`
-# # mySQL doesn't like the url unless it has the appended parameters
-# export SONARQUBE_JDBC_URL="$SONARQUBE_JDBC_URL&useUnicode=true&characterEncoding=utf8"
-
-
-echo $VCAP_SERVICES | jq '.["p.mysql"][]["credentials"]'
+export SONARQUBE_JDBC_USERNAME=`echo $VCAP_SERVICES | jq '.["p.mysql"][]["credentials"]["username"]'`
+export SONARQUBE_JDBC_PASSWORD=`echo $VCAP_SERVICES | jq '.["p.mysql"][]["credentials"]["password"]'`
+DEFAULT_JDBC_URL=`echo $VCAP_SERVICES | jq '.["p.mysql"][]["credentials"]["jdbcUrl"]'`
+# mySQL doesn't like the url unless it has the appended parameters
+export SONARQUBE_JDBC_URL="$DEFAULT_JDBC_URL&useUnicode=true&characterEncoding=utf8"
 
 echo "       sonar.web.port=${SONARQUBE_PORT}"
 echo "\n ------- The following properties were automatically created by the buildpack -----\n" >> ./sonar.properties
