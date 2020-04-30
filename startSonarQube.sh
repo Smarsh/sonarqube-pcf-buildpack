@@ -7,8 +7,6 @@ echo "-----> Setting sonar.properties"
 vcap_username=`echo $VCAP_SERVICES | jq '.["p.mysql"][]["credentials"]["username"]'`
 vcap_password=`echo $VCAP_SERVICES | jq '.["p.mysql"][]["credentials"]["password"]'`
 vcap_jdbc_url=`echo $VCAP_SERVICES | jq '.["p.mysql"][]["credentials"]["jdbcUrl"]'`
-# mySQL doesn't like the url unless it has the appended parameters
-
 
 #------------------------------------------
 # Drop the " at the beginning and end of the variable
@@ -16,6 +14,7 @@ vcap_jdbc_url=`echo $VCAP_SERVICES | jq '.["p.mysql"][]["credentials"]["jdbcUrl"
 
 vcap_jdbc_url="${vcap_jdbc_url%?}"
 vcap_jdbc_url="${vcap_jdbc_url#?}"
+# mySQL doesn't like the url unless it has the appended parameters
 vcap_jdbc_url="${vcap_jdbc_url}&useUnicode=true&characterEncoding=utf8"
 export SONARQUBE_JDBC_URL=$vcap_jdbc_url
 
