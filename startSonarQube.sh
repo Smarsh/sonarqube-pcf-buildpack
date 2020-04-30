@@ -21,7 +21,7 @@ export SONARQUBE_JDBC_URL=$vcap_jdbc_url
 
 vcap_username="${vcap_username%?}"
 vcap_username="${vcap_username#?}"
-export SONARQUBE_JDBC_USERNAME=vcap_username
+export SONARQUBE_JDBC_USERNAME=$vcap_username
 
 vcap_password="${vcap_password%?}"
 vcap_password="${vcap_password#?}"
