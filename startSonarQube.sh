@@ -10,11 +10,9 @@ echo "-----> Setting sonar.properties"
 # # mySQL doesn't like the url unless it has the appended parameters
 # export SONARQUBE_JDBC_URL="$SONARQUBE_JDBC_URL&useUnicode=true&characterEncoding=utf8"
 
-env
 
-echo $VCAP_SERVICES
+echo $VCAP_SERVICES | jq '.["p.mysql"][]["credentials"]'
 
-echo "USERNAME: $username"
 echo "       sonar.web.port=${SONARQUBE_PORT}"
 echo "\n ------- The following properties were automatically created by the buildpack -----\n" >> ./sonar.properties
 echo "sonar.web.port=${SONARQUBE_PORT}\n" >> ./sonar.properties

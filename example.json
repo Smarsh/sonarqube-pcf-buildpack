@@ -1,69 +1,38 @@
 {
- "VCAP_SERVICES": {
-  "p.mysql": [
-   {
-    "binding_name": null,
-    "credentials": {
-     "hostname": "q-n3s3y1.q-g31906.bosh",
-     "jdbcUrl": "jdbc:mysql://q-n3s3y1.q-g31906.bosh:3306/service_instance_db?user=f9ef8b3fadec48249218f457bd37209d\u0026password=5r3jcmfr8pulcq5l\u0026useSSL=false",
-     "name": "service_instance_db",
-     "password": "5r3jcmfr8pulcq5l",
-     "port": 3306,
-     "uri": "mysql://f9ef8b3fadec48249218f457bd37209d:5r3jcmfr8pulcq5l@q-n3s3y1.q-g31906.bosh:3306/service_instance_db?reconnect=true",
-     "username": "f9ef8b3fadec48249218f457bd37209d"
-    },
-    "instance_name": "sonar-mysql",
-    "label": "p.mysql",
-    "name": "sonar-mysql",
-    "plan": "db-small",
-    "provider": null,
-    "syslog_drain_url": null,
-    "tags": [
-     "mysql"
-    ],
-    "volume_mounts": []
-   }
-  ],
   "syslog-logstash": [
-   {
-    "binding_name": null,
-    "credentials": {
-     "port": "4000"
-    },
-    "instance_name": "syslog-logstash",
-    "label": "syslog-logstash",
-    "name": "syslog-logstash",
-    "plan": "shared",
-    "provider": null,
-    "syslog_drain_url": "syslog://logstash.prod.smarsh.cloud:5514",
-    "tags": [],
-    "volume_mounts": []
-   }
+    {
+      "label": "syslog-logstash",
+      "provider": null,
+      "plan": "shared",
+      "name": "syslog-logstash",
+      "tags": [],
+      "instance_name": "syslog-logstash",
+      "binding_name": null,
+      "credentials": { "port": "4000" },
+      "syslog_drain_url": "syslog://logstash.prod.smarsh.cloud:5514",
+      "volume_mounts": []
+    }
+  ],
+  "p.mysql": [
+    {
+      "label": "p.mysql",
+      "provider": null,
+      "plan": "db-small",
+      "name": "sonar-mysql",
+      "tags": ["mysql"],
+      "instance_name": "sonar-mysql",
+      "binding_name": null,
+      "credentials": {
+        "hostname": "q-n3s3y1.q-g31906.bosh",
+        "jdbcUrl": "jdbc:mysql://q-n3s3y1.q-g31906.bosh:3306/service_instance_db?user=8eaa9ee50600482d980bb9da7aea1e53&password=9nnxuz817aeevdlc&useSSL=false",
+        "name": "service_instance_db",
+        "password": "9nnxuz817aeevdlc",
+        "port": 3306,
+        "uri": "mysql://8eaa9ee50600482d980bb9da7aea1e53:9nnxuz817aeevdlc@q-n3s3y1.q-g31906.bosh:3306/service_instance_db?reconnect=true",
+        "username": "8eaa9ee50600482d980bb9da7aea1e53"
+      },
+      "syslog_drain_url": null,
+      "volume_mounts": []
+    }
   ]
- }
-}
-
-{
- "VCAP_APPLICATION": {
-  "application_id": "059d5bcd-c64d-40df-9327-dc0684a3dcce",
-  "application_name": "sonar",
-  "application_uris": [
-   "sonar.apps.prod.smarsh.cloud"
-  ],
-  "application_version": "b04aeccf-7f3b-4ea2-afd6-a54d77982527",
-  "cf_api": "https://api.sys.prod.smarsh.cloud",
-  "limits": {
-   "disk": 6144,
-   "fds": 16384,
-   "mem": 6144
-  },
-  "name": "sonar",
-  "space_id": "f5f323cc-3f0c-4ff7-9a88-762437db9781",
-  "space_name": "ops-dev",
-  "uris": [
-   "sonar.apps.prod.smarsh.cloud"
-  ],
-  "users": null,
-  "version": "b04aeccf-7f3b-4ea2-afd6-a54d77982527"
- }
 }
