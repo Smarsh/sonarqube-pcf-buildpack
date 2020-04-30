@@ -12,6 +12,8 @@ export SONARQUBE_JDBC_URL="$SONARQUBE_JDBC_URL&useUnicode=true&characterEncoding
 
 echo "HERE ARE THE VCAP VARS SONARQUBE_JDBC_USERNAME=$SONARQUBE_JDBC_USERNAME SONARQUBE_JDBC_PASSWORD=$SONARQUBE_JDBC_PASSWORD SONARQUBE_JDBC_URL=$SONARQUBE_JDBC_URL"
 
+env
+
 echo "       sonar.web.port=${SONARQUBE_PORT}"
 echo "\n ------- The following properties were automatically created by the buildpack -----\n" >> ./sonar.properties
 echo "sonar.web.port=${SONARQUBE_PORT}\n" >> ./sonar.properties
