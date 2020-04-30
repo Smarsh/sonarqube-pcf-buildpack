@@ -10,7 +10,7 @@ echo "-----> Setting sonar.properties"
 # # mySQL doesn't like the url unless it has the appended parameters
 # export SONARQUBE_JDBC_URL="$SONARQUBE_JDBC_URL&useUnicode=true&characterEncoding=utf8"
 
-source /home/vcap/app/getJq.sh
+sh ./getJq.sh
 
 cat $VCAP_SERVICES | jq '.[p.mmsyql][]'
 
