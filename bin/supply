@@ -20,6 +20,10 @@ mkdir ${BUILD_DIR}/.java
 # Unpack jre content directly to .java in BUILD_DIR
 # -C is the directory, strip-components removes the top-level folder (jre_1.8.....)
 tar zxf ${BIN_DIR}/jre.zip -C ${BUILD_DIR}/.java --strip-components 1
+echo "-----> Installing JQ"
+JQ=${BUILD_DIR}/jq
+curl https://stedolan.github.io/jq/download/linux64/jq > $JQ && chmod +x $JQ
+ls -la $JQ
 
 echo "-----> Installing sonarqube"
 if [ -z ${SONARQUBE_VERSION+x} ];
