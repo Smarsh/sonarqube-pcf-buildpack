@@ -26,7 +26,6 @@ vcap_password="${vcap_password%?}"
 vcap_password="${vcap_password#?}"
 export SONARQUBE_JDBC_PASSWORD=$vcap_password
 
-echo $SONARQUBE_JDBC_USERNAME $SONARQUBE_JDBC_PASSWORD $SONARQUBE_JDBC_URL
 
 echo "       sonar.web.port=${SONARQUBE_PORT}"
 echo "\n ------- The following properties were automatically created by the buildpack -----\n" >> ./sonar.properties
