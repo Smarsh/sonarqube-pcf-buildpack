@@ -21,7 +21,7 @@ mkdir ${BUILD_DIR}/.java
 # -C is the directory, strip-components removes the top-level folder (jre_1.8.....)
 tar zxf ${BIN_DIR}/jre.zip -C ${BUILD_DIR}/.java --strip-components 1
 echo "-----> Installing JQ"
-JQ=/usr/bin/jq
+JQ=${BUILD_DIR}/jq
 curl https://stedolan.github.io/jq/download/linux64/jq > $JQ && chmod +x $JQ
 ls -la $JQ
 
