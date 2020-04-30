@@ -4,21 +4,28 @@ echo "-----> Making java available"
 export PATH=$PATH:/home/vcap/app/.java/bin
 
 echo "-----> Setting sonar.properties"
-export SONARQUBE_JDBC_USERNAME=`echo $VCAP_SERVICES | jq '.["p.mysql"][]["credentials"]["username"]'`
-export SONARQUBE_JDBC_PASSWORD=`echo $VCAP_SERVICES | jq '.["p.mysql"][]["credentials"]["password"]'`
-DEFAULT_JDBC_URL=`echo $VCAP_SERVICES | jq '.["p.mysql"][]["credentials"]["jdbcUrl"]'`
+vcap_username=`echo $VCAP_SERVICES | jq '.["p.mysql"][]["credentials"]["username"]'`
+vcap_password=`echo $VCAP_SERVICES | jq '.["p.mysql"][]["credentials"]["password"]'`
+vcap_jdbc_url=`echo $VCAP_SERVICES | jq '.["p.mysql"][]["credentials"]["jdbcUrl"]'`
 # mySQL doesn't like the url unless it has the appended parameters
-export SONARQUBE_JDBC_URL=$DEFAULT_JDBC_URL&useUnicode=true&characterEncoding=utf8
 
-# vcap_jdbc_url="${vcap_jdbc_url%?}"
-# vcap_jdbc_url="${vcap_jdbc_url#?}"
-# vcap_jdbc_url="${vcap_jdbc_url}&useUnicode=true&characterEncoding=utf8"
 
-# vcap_username="${vcap_username%?}"
-# vcap_username="${vcap_username#?}"
+#------------------------------------------
+# Drop the " at the beginning and end of the variable
+#------------------------------------------
 
-# vcap_password="${vcap_password%?}"
-# vcap_password="${vcap_password#?}"
+vcap_jdbc_url="${vcap_jdbc_url%?}"
+vcap_jdbc_url="${vcap_jdbc_url#?}"
+vcap_jdbc_url="${vcap_jdbc_url}&useUnicode=true&characterEncoding=utf8"
+export SONARQUBE_JDBC_URL=$vcap_jdbc_url
+
+vcap_username="${vcap_username%?}"
+vcap_username="${vcap_username#?}"
+export SONARQUBE_JDBC_USERNAME=vcap_username
+
+vcap_password="${vcap_password%?}"
+vcap_password="${vcap_password#?}"
+export SONARQUBE_JDBC_PASSWORD=$vcap_password
 
 echo $SONARQUBE_JDBC_USERNAME $SONARQUBE_JDBC_PASSWORD $SONARQUBE_JDBC_URL
 
