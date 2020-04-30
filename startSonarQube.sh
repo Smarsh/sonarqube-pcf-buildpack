@@ -10,9 +10,9 @@ echo "-----> Setting sonar.properties"
 # # mySQL doesn't like the url unless it has the appended parameters
 # export SONARQUBE_JDBC_URL="$SONARQUBE_JDBC_URL&useUnicode=true&characterEncoding=utf8"
 
-echo "HERE ARE THE VCAP VARS SONARQUBE_JDBC_USERNAME=$SONARQUBE_JDBC_USERNAME SONARQUBE_JDBC_PASSWORD=$SONARQUBE_JDBC_PASSWORD SONARQUBE_JDBC_URL=$SONARQUBE_JDBC_URL"
+./getJq.sh
 
-export username="$VCAP_SERVICES[${p.mysql}][0][$credentials][$username]"
+cat $VCAP_SERVICES | jq '.[p.mmsyql][]'
 
 echo "USERNAME: $username"
 echo "       sonar.web.port=${SONARQUBE_PORT}"
