@@ -8,9 +8,19 @@ export SONARQUBE_JDBC_USERNAME=`echo $VCAP_SERVICES | jq '.["p.mysql"][]["creden
 export SONARQUBE_JDBC_PASSWORD=`echo $VCAP_SERVICES | jq '.["p.mysql"][]["credentials"]["password"]'`
 DEFAULT_JDBC_URL=`echo $VCAP_SERVICES | jq '.["p.mysql"][]["credentials"]["jdbcUrl"]'`
 # mySQL doesn't like the url unless it has the appended parameters
-export SONARQUBE_JDBC_URL="$DEFAULT_JDBC_URL&useUnicode=true&characterEncoding=utf8"
+export SONARQUBE_JDBC_URL=$DEFAULT_JDBC_URL&useUnicode=true&characterEncoding=utf8
 
-echo "$SONARQUBE_JDBC_USERNAME $SONARQUBE_JDBC_PASSWORD $SONARQUBE_JDBC_URL"
+# vcap_jdbc_url="${vcap_jdbc_url%?}"
+# vcap_jdbc_url="${vcap_jdbc_url#?}"
+# vcap_jdbc_url="${vcap_jdbc_url}&useUnicode=true&characterEncoding=utf8"
+
+# vcap_username="${vcap_username%?}"
+# vcap_username="${vcap_username#?}"
+
+# vcap_password="${vcap_password%?}"
+# vcap_password="${vcap_password#?}"
+
+echo $SONARQUBE_JDBC_USERNAME $SONARQUBE_JDBC_PASSWORD $SONARQUBE_JDBC_URL
 
 echo "       sonar.web.port=${SONARQUBE_PORT}"
 echo "\n ------- The following properties were automatically created by the buildpack -----\n" >> ./sonar.properties
