@@ -25,11 +25,6 @@ JQ=${BUILD_DIR}/jq
 curl https://stedolan.github.io/jq/download/linux64/jq > $JQ && chmod +x $JQ
 ls -la $JQ
 
-echo "-----> Installing aws"
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-unzip awscliv2.zip
-sudo ./aws/install
-
 echo "-----> Installing sonarqube"
 if [ -z ${SONARQUBE_VERSION+x} ];
 then
@@ -37,7 +32,19 @@ then
     exit 1
 fi
 
-aws s3 cp aws s3 cp s3://delivery-engineering/tools/${SONARQUBE_VERSION}.zip ${BIN_DIR}/sonarqube.zip
+req_path="/tools/${SONARQUBE_VERSION}.zip"
+curr_date=`date +'%a, %d %b %Y %H:%M:%S %z'`
+bucket_name="delivery-engineering"
+string_to_sign="GET\n\n\n${curr_date}\n/${bucket_name}${req_path}"
+secret="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+s3_key="XXXXXXXXXXXXXXXXXXXXXXX"
+signature=$(echo -en "${string_to_sign}" | openssl sha1 -hmac "${secret}" -binary | base64)
+
+wget --header "Host: ${bucket_name}.s3.amazonaws.com" \
+        --header "Date: $curr_date" \
+        --header "Authorization: AWS ${s3_key}:${signature}" \
+         "https://${bucket_name}.s3.amazonaws.com${req_path}" \
+         -O ${BIN_DIR}/sonarqube.zip -q --show-progress
 # wget "$SONARQUBE_DIST_URL/sonarqube/$SONARQUBE_ZIP" -O ${BIN_DIR}/sonarqube.zip --no-check-certificate -q --show-progress
 unzip -q ${BIN_DIR}/sonarqube.zip -d ${BUILD_DIR}
 mv ${BUILD_DIR}/sonarqube-${SONARQUBE_VERSION} ${BUILD_DIR}/sonarqube # Remove version suffix"
