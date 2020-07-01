@@ -11,7 +11,7 @@ INDEX=$4
 source ${BIN_DIR}/../vars.sh
 
 echo "-----> Installing java"
-wget --no-check-certificate -q -c \
+wget --no-check-certificate -q -c --show-progress \
         --header "Cookie: oraclelicense=accept-securebackup-cookie" \
         ${JRE_URL} -O ${BIN_DIR}/jre.zip
 
@@ -32,7 +32,7 @@ then
     exit 1
 fi
 
-wget "$SONARQUBE_DIST_URL/sonarqube/$SONARQUBE_ZIP" -O ${BIN_DIR}/sonarqube.zip --no-check-certificate -q
+wget "$SONARQUBE_DIST_URL/sonarqube/$SONARQUBE_ZIP" -O ${BIN_DIR}/sonarqube.zip --no-check-certificate -q --show-progress
 unzip -q ${BIN_DIR}/sonarqube.zip -d ${BUILD_DIR}
 mv ${BUILD_DIR}/sonarqube-${SONARQUBE_VERSION} ${BUILD_DIR}/sonarqube # Remove version suffix"
 
@@ -48,7 +48,7 @@ if [[ -f ${BUILD_DIR}/sonar-plugins.yml ]]; then
 
         echo "       Installing ${PLUGIN_NAME}"
 
-        wget ${PLUGIN_URL} -O "${PLUGIN_PATH}" --no-check-certificate -q
+        wget ${PLUGIN_URL} -O "${PLUGIN_PATH}" --no-check-certificate -q --show-progress
 
     done < ${BUILD_DIR}/sonar-plugins.yml
 
