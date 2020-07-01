@@ -38,11 +38,11 @@ bucket_name="delivery-engineering"
 string_to_sign="GET\n\n\n${curr_date}\n/${bucket_name}${req_path}"
 signature=$(echo -en "${string_to_sign}" | openssl sha1 -hmac "$AWS_SECRET_ACCESS_KEY" -binary | base64)
 
-curl -v -H "Host: ${bucket_name}.s3.amazonaws.com" \
-        -H "Date: $curr_date" \
-        -H "Authorization: AWS ${AWS_ACCESS_KEY_ID}:${signature}" \
-         "https://${bucket_name}.s3.amazonaws.com${req_path}" \
-         -O ${BIN_DIR}/sonarqube.zip
+curl -H "Host: ${bucket_name}.s3.amazonaws.com" \
+     -H "Date: $curr_date" \
+     -H "Authorization: AWS ${AWS_ACCESS_KEY_ID}:${signature}" \
+     "https://${bucket_name}.s3.amazonaws.com/${req_path}" \
+     -O ${BIN_DIR}/sonarqube.zip
 # wget "$SONARQUBE_DIST_URL/sonarqube/$SONARQUBE_ZIP" -O ${BIN_DIR}/sonarqube.zip --no-check-certificate -q --show-progress
 unzip -q ${BIN_DIR}/sonarqube.zip -d ${BUILD_DIR}
 mv ${BUILD_DIR}/sonarqube-${SONARQUBE_VERSION} ${BUILD_DIR}/sonarqube # Remove version suffix"
