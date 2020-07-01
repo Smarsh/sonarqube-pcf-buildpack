@@ -36,13 +36,11 @@ req_path="/tools/${SONARQUBE_VERSION}.zip"
 curr_date=`date +'%a, %d %b %Y %H:%M:%S %z'`
 bucket_name="delivery-engineering"
 string_to_sign="GET\n\n\n${curr_date}\n/${bucket_name}${req_path}"
-secret="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-s3_key="XXXXXXXXXXXXXXXXXXXXXXX"
-signature=$(echo -en "${string_to_sign}" | openssl sha1 -hmac "${secret}" -binary | base64)
+signature=$(echo -en "${string_to_sign}" | openssl sha1 -hmac "$AWS_SECRET_ACCESS_KEY" -binary | base64)
 
 wget --header "Host: ${bucket_name}.s3.amazonaws.com" \
         --header "Date: $curr_date" \
-        --header "Authorization: AWS ${s3_key}:${signature}" \
+        --header "Authorization: AWS ${AWS_ACCESS_KEY_ID}:${signature}" \
          "https://${bucket_name}.s3.amazonaws.com${req_path}" \
          -O ${BIN_DIR}/sonarqube.zip -q --show-progress
 # wget "$SONARQUBE_DIST_URL/sonarqube/$SONARQUBE_ZIP" -O ${BIN_DIR}/sonarqube.zip --no-check-certificate -q --show-progress
