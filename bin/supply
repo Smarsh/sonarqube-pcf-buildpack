@@ -63,4 +63,5 @@ if [[ -f ${BUILD_DIR}/sonar-plugins.yml ]]; then
 
     done < ${BUILD_DIR}/sonar-plugins.yml
 
+    find ${PLUGIN_PATH} -size 0c -delete
 fi
